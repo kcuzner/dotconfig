@@ -98,15 +98,6 @@ PS1="$COLOR_CURRENT\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(prompt_vcs)\
 #fi
 unset color_prompt force_color_prompt
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -144,6 +135,6 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# As the very last thing, we display our arch system info
-#archey
+# execute local machine bash configuration
+[[ -f ~/.bash_local ]] && . ~/.bash_local
 

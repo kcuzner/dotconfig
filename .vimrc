@@ -15,6 +15,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'rking/ag.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'fatih/vim-go'
+Plugin 'kien/ctrlp.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
