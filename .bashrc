@@ -5,7 +5,7 @@
 export PROGRAMFILES=C:/Program\ Files
 #export VBOX_USB=usbfs
 
-export LANG=C
+export LANG=en_US.utf8
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
@@ -35,6 +35,10 @@ shopt -s checkwinsize
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
+    export TERM=xterm-256color
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
