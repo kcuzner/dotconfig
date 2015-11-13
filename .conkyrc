@@ -1,0 +1,30 @@
+out_to_x no
+own_window no
+out_to_console yes
+background no
+max_text_width 0
+
+update_interval 2.0
+
+total_run_times 0
+
+short_units yes
+
+use_spacer left
+
+cpu_avg_samples 2
+
+TEXT
+
+[{"full_text":"<span foreground=\"\#4c7899\">/</span> ${fs_free /}", "markup":"pango"},
+ {"full_text":"<span foreground=\"\#4c7899\">/home</span> ${fs_free /home}", "markup":"pango"},
+ {"full_text":"<span foreground=${if_match ${memperc} < 90}\"\#4c7899\"${else}\"\#ff0000\"${endif}>RAM</span> ${memperc}%", "markup": "pango"},
+ {"full_text":"<span foreground=\"\#4c7899\">W</span> ${addr wlp2s0}${if_up wlp2s0} ${wireless_essid wlp2s0} ${wireless_link_qual_perc wlp2s0}%${endif}", "markup":"pango"},
+ {"full_text":"<span foreground=\"\#4c7899\">E</span> ${addr enp3s0f2}", "markup":"pango"},
+ {"full_text":"<span foreground=\"\#4c7899\">\u266a</span> ${exec amixer -c 0 get Master | grep Mono: | cut -d " " -f6,8}", "markup":"pango"},
+ {"full_text":"<span foreground=\"\#4c7899\">B</span> ${battery_short BAT0} ${battery_time BAT0}", "markup":"pango"},
+ {"full_text":"<span foreground=\"\#4c7899\">CPU</span> ${cpu cpu0}%", "markup":"pango"},
+ {"full_text":"<span foreground=\"\#cccccc\">${time}</span>", "markup":"pango"}],
+
+
+
