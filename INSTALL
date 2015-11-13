@@ -1,5 +1,18 @@
 #!/usr/bin/bash
 
 cd `dirname $0`
-echo `pwd`
+
+FILES=`git ls-tree --name-only HEAD`
+SCRIPT_DIR=`pwd`
+SCRIPT_NAME=`basename $0`
+
+IGNORE_NAMES=".gitignore INSTALL"
+
+cd $HOME
+for FILE in $FILES; do
+    if [[ $IGNORE_NAMES =~ $FILE ]]; then
+        continue
+    fi
+    ln --symbolic --interactive $SCRIPT_DIR/$FILE
+done
 
