@@ -14,6 +14,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'rking/ag.vim'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'fatih/vim-go'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -57,7 +58,7 @@ set number
 
 set nowrap
 set sidescroll=5
-set lcs=extends:>,precedes:<
+set lcs=extends:>,precedes:<,tab:!.
 
 set cc=80
 
