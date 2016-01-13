@@ -36,6 +36,7 @@ ${if_existing /sys/class/power_supply/BAT0}
  {"full_text":"<span foreground=\"\#4c7899\">B</span> ${battery_short BAT0} ${battery_time BAT0}", "markup":"pango"},
 $endif
  {"full_text":"<span foreground=\"\#4c7899\">CPU</span> ${cpu cpu0}%", "markup":"pango"},
+ {"full_text":"<span foreground=\"\#4c7899\">L</span> ${loadavg 1}", "markup":"pango"},
  {"full_text":"<span foreground=\"\#cccccc\">${time}</span>", "markup":"pango"}],
 
 
