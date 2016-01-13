@@ -16,6 +16,7 @@ Plugin 'rking/ag.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'fatih/vim-go'
 Plugin 'kien/ctrlp.vim'
+Plugin 'wting/rust.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -45,22 +46,29 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 " autocomplete
 let g:ycm_filetype_whitelist = { 'cpp': 1, 'c': 1, 'python':1 }
 
+" smart home
+noremap <expr> <silent> <Home> col('.') == match(getline('.'),'\S')+1 ? '0' : '^'
+imap <silent> <Home> <C-O><Home>
+
 set smartindent
 set tabstop=4
 set shiftwidth=4
 set expandtab
 
 set background=dark
-colorscheme jellybeans
+" colorscheme jellybeans
+colorscheme gruvbox
 
 set mouse=a
 syntax on
 set number
 
+set autoread
+
 set nowrap
 set sidescroll=5
 set lcs=extends:>,precedes:<,tab:!.
 
-set cc=80
+set cc=80,120
 
 
