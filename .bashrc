@@ -7,6 +7,8 @@ export PROGRAMFILES=C:/Program\ Files
 
 export LANG=en_US.utf8
 
+export EDITOR=vim
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
@@ -16,7 +18,7 @@ export HISTCONTROL=ignoreboth
 
 export HPGCC=/home/kcuzner/hpgcc_20
 export GOPATH=/home/kcuzner/Projects/go
-export PATH=$PATH:$HPGCC/bin:$HOME/.gem/ruby/2.0.0/bin:$GOPATH/bin
+export PATH=$PATH:$HPGCC/bin:$HOME/.gem/ruby/2.0.0/bin:$GOPATH/bin:$HOME/bin:$HOME/.cargo/bin
 
 # append to the history file, don't overwrite it
 shopt -s histappend
