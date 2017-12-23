@@ -46,6 +46,21 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 " autocomplete
 let g:ycm_filetype_whitelist = { 'cpp': 1, 'c': 1, 'python':1 }
 
+" rust ctags
+let g:tagbar_type_rust = {
+    \ 'ctagstype' : 'rust',
+    \ 'kinds' : [
+        \'T:types,type definitions',
+        \'f:functions,function definitions',
+        \'g:enum,enumeration names',
+        \'s:structure names',
+        \'m:modules,module names',
+        \'c:consts,static constants',
+        \'t:traits',
+        \'i:impls,trait implementations',
+    \]
+    \}
+
 " smart home
 noremap <expr> <silent> <Home> col('.') == match(getline('.'),'\S')+1 ? '0' : '^'
 imap <silent> <Home> <C-O><Home>
