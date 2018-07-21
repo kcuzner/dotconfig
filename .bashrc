@@ -1,9 +1,12 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
-export PROGRAMFILES=C:/Program\ Files
-#export VBOX_USB=usbfs
+# Base bashrc for new home directories
+#
+# Kevin Cuzner
+#
+# !!! IMPORTANT !!!
+# Do not modify this file unless making a change that applies to all your
+# computers. If it is a local setting (such as appending the .cargo/bin
+# folder to your path), use the .bash_local script instead.
+#
 
 export LANG=en_US.utf8
 
@@ -137,6 +140,12 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# execute local machine bash configuration
+# Execute local machine bash configuration
+#
+# This will locate the actual position of this bashrc, create a new .bash_local
+# in the home directory if able and it doesn't exist and execute ~/.bash_local
+# if it exists
+DIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+[[ -f ~/.bash_local ]] || ( [[ -f $DIR/.bash_local ]] && cp $DIR/.bash_local ~/.bash_local && chmod +x ~/.bash_local )
 [[ -f ~/.bash_local ]] && . ~/.bash_local
 

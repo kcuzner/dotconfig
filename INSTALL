@@ -6,7 +6,7 @@ FILES=`git ls-tree --name-only HEAD`
 SCRIPT_DIR=`pwd`
 SCRIPT_NAME=`basename $0`
 
-IGNORE_NAMES=".gitignore INSTALL"
+IGNORE_NAMES=".gitignore INSTALL .bash_local"
 
 cd $HOME
 for FILE in $FILES; do

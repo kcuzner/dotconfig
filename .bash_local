@@ -1,0 +1,8 @@
+#!/usr/bin/sh
+# Template for a local bash script
+#
+# Changes to this script won't be tracked by the dotconfig repository. It is
+# not symbolically linked into the dotconfig folder and instead copied into
+# the home directory if a .bash_local doesn't exist already.
+#
+
