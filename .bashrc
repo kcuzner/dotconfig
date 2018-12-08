@@ -36,32 +36,51 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-COLOR_ROOT='\[\e[1;31m\]'
-COLOR_USER='\[\e[1;32m\]'
-COLOR_SUDO='\[\e[1;33m\]'
-COLOR_RESET='\[\e[0m\]'
+COLOR_RESET='\e[0m'
+
+# Use fancy colors if able
+case "$(tput colors)" in
+    "256" )
+        COLOR_ROOT='\e[1;31m'
+        COLOR_USER='\e[1;38;5;34m'
+        COLOR_SUDO='\e[1;33m'
+        COLOR_DIR='\e[1;38;5;33m'
+        COLOR_VCS='\e[38;5;202m'
+        COLOR_PROMPT='\e[38;5;250m'
+        ;;
+    *)
+        COLOR_ROOT='\e[1;31m'
+        COLOR_USER='\e[1;32m'
+        COLOR_SUDO='\e[1;33m'
+        COLOR_DIR='\e[1;34m'
+        COLOR_VCS='\e[33m'
+        COLOR_PROMPT=$COLOR_RESET
+        ;;
+esac
 
 COLOR_CURRENT=${COLOR_USER}
 
 if [[ $EUID -eq 0 ]]; then
-	COLOR_CURRENT=${COLOR_ROOT}
+    COLOR_CURRENT=${COLOR_ROOT}
 elif [[ -n $SUDO_USER ]]; then
-	COLOR_CURRENT=${COLOR_SUDO}
+    COLOR_CURRENT=${COLOR_SUDO}
 fi
 
 prompt_git() {
-	git branch &>/dev/null || return 1;
-	HEAD="$(git symbolic-ref HEAD 2>/dev/null)";
-	BRANCH="${HEAD##*/}";
-	[[ -n "$(git status 2> /dev/null | \
-		grep -F 'working directory clean')" ]] || STATUS="!";
-	#printf '(git:%s)' "${BRANCH:-unknown}${STATUS}";
+    git branch &>/dev/null || return 1;
+    HEAD="$(git symbolic-ref HEAD 2>/dev/null)";
+    BRANCH="${HEAD##refs/heads/}";
+    [[ -n "$(git status 2> /dev/null | \
+        grep -F 'working tree clean')" ]] || STATUS="!";
+    printf '(git:%s)' "${BRANCH:-unknown}${STATUS}";
 }
 prompt_vcs() {
-	prompt_git;
+    printf "$COLOR_VCS ";
+    prompt_git;
+    printf $COLOR_RESET;
 }
 
-PS1="$COLOR_CURRENT\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(prompt_vcs)\$ ";
+PS1="\[$COLOR_CURRENT\]\u@\h\[$COLOR_RESET\]:\[$COLOR_DIR\]\w\[$COLOR_RESET\]\$(prompt_vcs)\n\[$COLOR_PROMPT\]\$ ";
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
