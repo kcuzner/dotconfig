@@ -28,6 +28,7 @@ font pango:xos4 Terminus 9
 # font, it doesn’t scale on retina/hidpi displays.
 
 exec --no-startup-id sh ~/.fehbg
+exec --no-startup-id variety
 exec --no-startup-id dropbox
 exec --no-startup-id xrdb ~/.Xresources
 exec --no-startup-id setxkbmap -option compose:ralt
