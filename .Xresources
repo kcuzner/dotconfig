@@ -1,7 +1,13 @@
 urxvt*termName: rxvt-256color
 urxvt*background: #000000
 urxvt*foreground: #cccccc
-urxvt*font: xft:xos4 Terminus:size=9:antialias=true
+#define termfont xft:xos4 Terminus:size=9:antialias=true
+!#define termfont xft:Hack:size=9:antialias=true
+urxvt*font: termfont
+urxvt*boldFont: termfont
+urxvt*italicFont: termfont
+urxvt*boltItalicFont: termfont
+!urxvt*letterSpace: -1
 
 urxvt*scrollBar: false
 
