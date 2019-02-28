@@ -12,3 +12,7 @@ if (has("gui_win32") || has("gui_gtk")) && !exists("b:browsefilter")
     let b:browsefilter = "OpenSCAD Source Files (*.scad)\t*.scad\n" .
 	  \ "All Files (*.*)\t*.*\n"
 endif
+
+set sw=2
+set ts=2
+
