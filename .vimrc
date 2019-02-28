@@ -84,6 +84,7 @@ set background=dark
 colorscheme gruvbox
 
 set mouse=a
+set ttymouse=sgr
 syntax on
 set number
 
