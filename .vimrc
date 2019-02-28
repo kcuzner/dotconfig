@@ -19,6 +19,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'wting/rust.vim'
 Plugin 'cespare/vim-toml'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'Yggdroot/indentLine'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
