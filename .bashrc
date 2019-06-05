@@ -8,8 +8,6 @@
 # folder to your path), use the .bash_local script instead.
 #
 
-export LANG=en_US.utf8
-
 export EDITOR=vim
 
 # If not running interactively, don't do anything
