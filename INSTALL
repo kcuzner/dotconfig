@@ -2,17 +2,30 @@
 
 cd `dirname $0`
 
-FILES=`git ls-tree --name-only HEAD`
 SCRIPT_DIR=`pwd`
 SCRIPT_NAME=`basename $0`
 
 IGNORE_NAMES=".gitignore INSTALL .bash_local"
+RECURSE_NAMES=".config"
 
-cd $HOME
-for FILE in $FILES; do
-    if [[ $IGNORE_NAMES =~ $FILE ]]; then
-        continue
-    fi
-    ln --symbolic --interactive $SCRIPT_DIR/$FILE
-done
+install_links () {
+    FILES=`(cd $SCRIPT_DIR && git ls-tree --name-only $2:$1/)`
+    for FILE in $FILES; do
+        if [[ $IGNORE_NAMES =~ $FILE ]]; then
+            continue
+        fi
+        if [[ $RECURSE_NAMES =~ $FILE ]]; then
+            mkdir -p $1/$FILE
+            pushd $1/$FILE
+            install_links $1/$FILE HEAD
+            popd
+        else
+            ln --symbolic --interactive $SCRIPT_DIR/$1/$FILE
+        fi
+    done
+}
+
+pushd $HOME
+install_links . HEAD
+popd
 
