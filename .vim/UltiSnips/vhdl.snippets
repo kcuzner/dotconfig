@@ -1,0 +1,50 @@
+snippet header
+-------------------------------------------------------------------------------
+-- File: `!p snip.rv = snip.fn`
+-- Author: Kevin Cuzner
+--
+-- Purpose:
+-- $0
+-------------------------------------------------------------------------------
+endsnippet
+
+snippet package
+package $1 is
+
+	$0
+
+end package $1;
+endsnippet
+
+snippet "package body"
+package body $1 is
+
+	$0
+
+end package body $1;
+endsnippet
+
+snippet record
+type $1 is record
+	$0
+end record $1;
+endsnippet
+
+snippet pkgprocedure
+procedure $1 ($2);
+
+procedure $1 ($2) is
+	$3
+begin
+	$0
+end procedure $1;
+endsnippet
+
+snippet procedure
+procedure $1 ($2) is
+	$3
+begin
+	$0
+end procedure $1;
+endsnippet
+
