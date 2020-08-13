@@ -19,6 +19,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'wting/rust.vim'
 Plugin 'cespare/vim-toml'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'junegunn/fzf'
 Plugin 'Yggdroot/indentLine'
 
 call vundle#end()            " required
@@ -93,6 +94,9 @@ set smartindent
 set tabstop=4
 set shiftwidth=4
 set expandtab
+
+" fzf configuration
+nnoremap <Leader>s :call fzf#run({'source': 'rg --files', 'sink': 'e', 'down': '40%'})<CR>
 
 set background=dark
 " colorscheme jellybeans
