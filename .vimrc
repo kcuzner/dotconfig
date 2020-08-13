@@ -21,6 +21,8 @@ Plugin 'cespare/vim-toml'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'junegunn/fzf'
 Plugin 'Yggdroot/indentLine'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
