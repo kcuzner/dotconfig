@@ -8,43 +8,68 @@ snippet header
 -------------------------------------------------------------------------------
 endsnippet
 
+snippet function
+function $1 ($2) return $3 is
+begin -- $1
+	$0
+end function $1;
+endsnippet
+
+snippet proc
+procedure $1 ($2) is
+begin -- $1
+	$0
+end procedure $1;
+endsnippet
+
 snippet package
-package $1 is
+package ${1:`!p snip.rv = snip.basename`} is
 
 	$0
 
 end package $1;
 endsnippet
 
-snippet "package body"
-package body $1 is
+snippet tb
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Component Testbench
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
-	$0
+--synthesis translate_off
 
-end package body $1;
-endsnippet
+library ieee;
+	use ieee.std_logic_1164.all;
+	use ieee.numeric_std.all;
 
-snippet record
-type $1 is record
-	$0
-end record $1;
-endsnippet
+entity ${2:tb_${1:`!p snip.rv = snip.basename`}} is
+end entity;
 
-snippet pkgprocedure
-procedure $1 ($2);
+architecture test of $2 is
 
-procedure $1 ($2) is
-	$3
+	signal StopSim : boolean := false;
+
 begin
-	$0
-end procedure $1;
+
+	StimProc: process
+	begin
+		wait for 10 us;
+		StopSim <= true;
+		wait;
+	end process StimProc;
+
+end test;
+
+--synthesis translate_on
 endsnippet
 
-snippet procedure
-procedure $1 ($2) is
-	$3
-begin
+snippet block
+$1: block is
+begin -- block $1
+
 	$0
-end procedure $1;
+
+end block $1;
 endsnippet
 
