@@ -97,8 +97,19 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+set scrolloff=10
+
 " fzf configuration
 nnoremap <Leader>s :call fzf#run({'source': 'rg --files', 'sink': 'e', 'down': '40%'})<CR>
+
+" ripgrep
+set grepprg=rg\ --vimgrep
+nmap <Leader>g :grep <C-r><C-w><CR>:cope<CR>
+
+" quickfix
+nmap <leader>fn :cn<CR>
+nmap <leader>fp :cp<CR>
+nmap <leader>fq :ccl<CR>
 
 set background=dark
 " colorscheme jellybeans
