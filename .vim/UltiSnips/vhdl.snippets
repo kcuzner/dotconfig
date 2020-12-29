@@ -12,14 +12,14 @@ snippet function
 function $1 ($2) return $3 is
 begin -- $1
 	$0
-end function $1;
+end $1;
 endsnippet
 
 snippet proc
 procedure $1 ($2) is
 begin -- $1
 	$0
-end procedure $1;
+end $1;
 endsnippet
 
 snippet package
@@ -28,6 +28,14 @@ package ${1:`!p snip.rv = snip.basename`} is
 	$0
 
 end package $1;
+endsnippet
+
+snippet body
+package body ${1:`!p snip.rv = snip.basename`} is
+
+	$0
+
+end package body $1;
 endsnippet
 
 snippet tb
