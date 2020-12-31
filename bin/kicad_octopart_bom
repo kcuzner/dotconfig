@@ -1,0 +1,175 @@
+#!/usr/bin/env python3
+"""
+Creates a BOM spreadsheet with updating pricing from Octopart using the custom
+'Part No.' field on schematic components
+"""
+
+import sys, argparse, time, math, webbrowser, os
+import json, urllib.parse, urllib.request
+import xml.etree.ElementTree as ET
+
+from itertools import *
+from decimal import *
+
+THROTTLE_TIME_S = 0.333
+
+def create_part_table(parts):
+    rows = [p.tr() for p in parts]
+    grand_total = sum([p.total_price for p in parts])
+    header = '<tr><th>Ref</th><th>Qty</th><th>PN</th><th>Value</th><th>Description</th><th>Unit</th><th>Total</th></tr>'
+    footer = '<tr><td></td><td></td><td></td><td></th><td></td><td style="text-align: right;">Total:</td><td>${0}</td>'.format(grand_total)
+    return '<table class="table">{0}{1}{2}</table>'.format(header, ''.join(rows), footer)
+
+class KicadPart(object):
+    def __init__(self, libpart, value, part_number, first_ref):
+        """
+        Creates a part description from an etree node
+        """
+        self.libpart = libpart
+        self.values = [value]
+        self.part_number = part_number
+        self.description = None
+        self.__unit_price = None
+        self.refs = [first_ref]
+    def add_ref(self, name, value):
+        self.refs.append(name)
+        self.add_value(value)
+    def add_value(self, value):
+        if value not in self.values:
+            self.values.append(value)
+    @property
+    def qty(self):
+        return len(self.refs)
+    def query(self, seller=None):
+        return {'sku': self.part_number, 'seller': seller, 'limit': 1}
+    @property
+    def unit_price(self):
+        return self.__unit_price
+    @property
+    def value(self):
+        return self.values[0]
+    def add_value(self, value):
+        if value not in self.values:
+            self.values.append(value)
+    @unit_price.setter
+    def unit_price(self, value):
+        self.__unit_price = value
+    @property
+    def total_price(self):
+        return self.unit_price * len(self.refs) if self.unit_price is not None else Decimal(0)
+    @property
+    def refs_str(self):
+        return ', '.join(self.refs)
+    def tr(self):
+        """
+        Creates a HTML row entry for this part
+        """
+        return "<tr><td>{0.refs_str}</td><td>{0.qty}</td><td>{0.part_number}</td><td>{0.values}</td><td>{0.description}</td><td>${0.unit_price}</td><td>${0.total_price}</td></tr>".format(self)
+    def __repr__(self):
+        if self.unit_price is None:
+            return "<Part: {0.libpart}:{0.value}, {0.part_number}, {0.refs}>".format(self)
+        else:
+            return "<Part: {0.libpart}:{0.value}, {0.part_number}, ${0.unit_price}, {0.refs}>".format(self)
+        
+
+def extract_description(item, seller):
+    """
+    Extracts a sellers description from the passed item
+    """
+    for d in item['descriptions']:
+        for s in d['attribution']['sources']:
+            if s['name'] == seller:
+                return d['value']
+    return None
+
+def extract_offers(results):
+    """
+    Extracts offers from a set of results, returning a set of tuples consisting
+    of a SKU and the offer pricing set with description
+    """
+    for r in results:
+        for i in r['items']:
+            for o in i['offers']:
+                if 'USD' not in o['prices']:
+                    continue
+                description = extract_description(i, o['seller']['name'])
+                prices = [(p[0], Decimal(p[1])) for p in o['prices']['USD']]
+                yield (o['sku'], {'prices': prices, 'description': description})
+
+class OctopartBOMBuilder(object):
+    def __init__(self, api_key, seller, board_qty):
+        self.api_key = api_key
+        self.seller = seller
+        self.board_qty = board_qty
+    def set_pricing(self, parts):
+        """
+        Loads pricing from Octopart, handing any request throttling needed
+        """
+        for k, g in groupby(enumerate(parts), lambda t: math.floor(t[0]/20)):
+            self.__set_pricing([t[1] for t in g])
+
+    def __set_pricing(self, parts):
+        start = time.clock()
+        queries = [p.query(self.seller) for p in parts]
+        url = 'http://octopart.com/api/v3/parts/match?queries={0}&apikey={1}&exact_only=true&include[]=descriptions'\
+                .format(urllib.parse.quote(json.dumps(queries)),
+                    urllib.parse.quote(self.api_key))
+        data = json.loads(urllib.request.urlopen(url).read().decode())
+        offers = dict(extract_offers(data['results']))
+        for p in parts:
+            offer = offers[p.part_number]
+            p.description = offer['description']
+            valid_prices = [t for t in offer['prices'] if t[0] <= p.qty * self.board_qty] # take into account the board quantity
+            if len(valid_prices) == 0:
+                continue
+            best_price = list(reversed(sorted(valid_prices, key=lambda t: t[0])))[0]
+            p.unit_price = best_price[1]
+        delta = time.clock() - start
+        if delta < THROTTLE_TIME_S:
+            time.sleep(THROTTLE_TIME_S - delta)
+
+
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Create a BOM using Octopart')
+    parser.add_argument('xml', metavar='INPUT', help='Kicad BOM XML File')
+    parser.add_argument('output', metavar='OUTPUT', help='Output file')
+    parser.add_argument('--api-key', help='Octopart API Key')
+    parser.add_argument('--seller', help='Seller name', default='Digi-Key')
+    parser.add_argument('--qty', help='Board quantity', type=int, default=1)
+    args = parser.parse_args()
+    tree = ET.parse(args.xml)
+    root = tree.getroot()
+    bom_parts = {}
+    other_parts = []
+    for comp in root.iter('comp'):
+        ref = comp.attrib['ref']
+        libpart = comp.find('libsource').attrib['part']
+        value = comp.find('value').text
+        fields = dict([(e.attrib['name'], e.text) for e in comp.iter('field')])
+        partno = fields.get('Part No.') or fields.get('Part Number')
+        if partno is not None:
+            if partno in bom_parts:
+                existing = bom_parts[partno]
+                if value != existing.value:
+                    print("Warning: Component {0} value is {1}, expected {2}".format(ref, value, existing.value))
+                bom_parts[partno].add_ref(ref, value)
+            else:
+                bom_parts[partno] = KicadPart(libpart, value, partno, ref)
+        else:
+            print('Component {0} does not have a part number'.format(ref))
+            other_parts.append(KicadPart(libpart, value, partno, ref))
+    builder = OctopartBOMBuilder(args.api_key, args.seller, args.qty)
+    builder.set_pricing(bom_parts.values())
+    with open(args.output, 'w') as f:
+        f.write('<html><head><link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /></head><body>')
+        f.write('<p><strong>Board quantity:</strong> {0}</p>'.format(args.qty))
+        f.write(create_part_table(list(reversed(sorted(bom_parts.values(), key=lambda p: p.total_price)))+other_parts))
+        f.write('</body></html>')
+    webbrowser.open('file://' + os.path.realpath(args.output))
+
+
+if __name__ == "__main__":
+    main()
+
