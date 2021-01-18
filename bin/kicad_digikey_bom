@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+
+import argparse
+import csv
+import xml.etree.ElementTree as ET
+from itertools import groupby
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Create a CSV BOM from KiCAD XML for Digi-Key"
+    )
+    parser.add_argument("XML", help="Path to KiCAD XML")
+    parser.add_argument("OUT", help="Output name without extension")
+
+    args = parser.parse_args()
+    root = ET.parse(args.XML).getroot()
+    xml_comps = root.findall("./components/comp")
+    comps = sorted(
+        [
+            {
+                "ref": e.attrib["ref"],
+                "part_number": next(
+                    (f.text for f in e.findall("./fields/field[@name='Part Number']")),
+                    "",
+                ),
+            }
+            for e in xml_comps
+        ],
+        key=lambda c: c["part_number"],
+    )
+    with open(args.OUT + ".csv", "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        for key, group in groupby(comps, key=lambda c: c["part_number"]):
+            if key:
+                group_comps = list(group)
+                print(group_comps)
+                refs = ",".join((c["ref"] for c in group_comps))
+                writer.writerow([refs, key, len(group_comps)])
+
+
+if __name__ == "__main__":
+    main()
