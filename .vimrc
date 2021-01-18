@@ -1,31 +1,30 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" use vim-plug as the plugin manager
+call plug#begin('~/.vim/plugged')
 
-Plugin 'flazz/vim-colorschemes'
-Plugin 'scrooloose/nerdtree'
-Plugin 'bling/vim-airline'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
-Plugin 'majutsushi/tagbar'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'rking/ag.vim'
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'fatih/vim-go'
-Plugin 'kien/ctrlp.vim'
-Plugin 'rust-lang/rust.vim'
-Plugin 'cespare/vim-toml'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'junegunn/fzf'
-Plugin 'Yggdroot/indentLine'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+Plug 'flazz/vim-colorschemes'
+Plug 'scrooloose/nerdtree'
+Plug 'bling/vim-airline'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'majutsushi/tagbar'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'rking/ag.vim'
+"Plug 'Valloric/YouCompleteMe'
+Plug 'fatih/vim-go'
+Plug 'kien/ctrlp.vim'
+Plug 'rust-lang/rust.vim'
+Plug 'cespare/vim-toml'
+Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/fzf'
+Plug 'Yggdroot/indentLine'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
-call vundle#end()            " required
-filetype plugin indent on    " required
+" Initialize plugin system
+call plug#end()
 
 set laststatus=2 "airline
 
@@ -112,8 +111,7 @@ nmap <leader>fp :cp<CR>
 nmap <leader>fq :ccl<CR>
 
 set background=dark
-" colorscheme jellybeans
-colorscheme gruvbox
+colorscheme holokai
 
 set mouse=a
 set ttymouse=sgr
