@@ -109,7 +109,7 @@ class OctopartBOMBuilder(object):
             self.__set_pricing([t[1] for t in g])
 
     def __set_pricing(self, parts):
-        start = time.clock()
+        start = time.time()
         queries = [p.query(self.seller) for p in parts]
         url = 'http://octopart.com/api/v3/parts/match?queries={0}&apikey={1}&exact_only=true&include[]=descriptions'\
                 .format(urllib.parse.quote(json.dumps(queries)),
@@ -124,7 +124,7 @@ class OctopartBOMBuilder(object):
                 continue
             best_price = list(reversed(sorted(valid_prices, key=lambda t: t[0])))[0]
             p.unit_price = best_price[1]
-        delta = time.clock() - start
+        delta = time.time() - start
         if delta < THROTTLE_TIME_S:
             time.sleep(THROTTLE_TIME_S - delta)
 
