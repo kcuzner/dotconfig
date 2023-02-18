@@ -35,6 +35,10 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " show hidden files in nerdtree
 let NERDTreeShowHidden=1
+" Quit nerdtree on open
+let NERDTreeQuitOnOpen=1
+" Open nerdtree
+nnoremap <C-t> :NERDTreeToggle<CR>
 
 " tagbar
 nmap <F8> :TagbarToggle<CR>
