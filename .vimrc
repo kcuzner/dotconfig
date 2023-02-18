@@ -23,6 +23,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'psf/black', { 'tag': '19.10b0' }
+Plug 'lepture/vim-jinja'
 
 " Initialize plugin system
 call plug#end()
