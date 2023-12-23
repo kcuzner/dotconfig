@@ -121,7 +121,9 @@ set background=dark
 colorscheme holokai
 
 set mouse=a
-set ttymouse=sgr
+if !has('nvim')
+  set ttymouse=sgr
+endif
 syntax on
 set number
 
