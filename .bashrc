@@ -35,6 +35,12 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# Perform pyenv setup if available
+if command -v pyenv &> /dev/null
+then
+    export PATH=$(pyenv root)/shims:$PATH
+fi
+
 COLOR_RESET='\e[0m'
 
 # Use fancy colors if able
