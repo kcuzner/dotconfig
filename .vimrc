@@ -1,16 +1,30 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+if exists('g:vscode')
+  set number relativenumber
+  augroup numbertoggle
+    autocmd!
+    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+    autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
+  augroup end
+  set smartindent
+  set tabstop=4
+  set shiftwidth=4
+  set expandtab
+  set cc=80,120
+  "Do not execute rest of init.vim, do not apply any configs
+  finish
+endif
+
 " use vim-plug as the plugin manager
 call plug#begin('~/.vim/plugged')
 
 Plug 'flazz/vim-colorschemes'
-Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'majutsushi/tagbar'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'rking/ag.vim'
 "Plug 'Valloric/YouCompleteMe'
 Plug 'fatih/vim-go'
@@ -25,12 +39,20 @@ Plug 'honza/vim-snippets'
 Plug 'psf/black', { 'tag': '19.10b0' }
 Plug 'lepture/vim-jinja'
 
+if has("nvim")
+  Plug 'echasnovski/mini.nvim'
+else
+  Plug 'scrooloose/nerdtree'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
+endif
+
 " Initialize plugin system
 call plug#end()
 
 set laststatus=2 "airline
 
 " open NERDTRee automatically
+if !has("nvim")
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " show hidden files in nerdtree
@@ -39,6 +61,7 @@ let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=1
 " Open nerdtree
 nnoremap <C-t> :NERDTreeToggle<CR>
+endif
 
 " tagbar
 nmap <F8> :TagbarToggle<CR>
@@ -119,6 +142,8 @@ nmap <leader>fq :ccl<CR>
 
 set background=dark
 colorscheme holokai
+
+set guifont=Hack:h6
 
 set mouse=a
 if !has('nvim')
