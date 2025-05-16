@@ -38,6 +38,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'psf/black', { 'tag': '19.10b0' }
 Plug 'lepture/vim-jinja'
+Plug 'Exafunction/windsurf.vim'
 
 if has("nvim")
   Plug 'echasnovski/mini.nvim'
@@ -159,5 +160,3 @@ set sidescroll=5
 set lcs=extends:>,precedes:<,tab:!.
 
 set cc=80,120
-
-
