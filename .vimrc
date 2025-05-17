@@ -36,7 +36,7 @@ Plug 'junegunn/fzf'
 Plug 'Yggdroot/indentLine'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'psf/black', { 'tag': '19.10b0' }
+Plug 'psf/black'
 Plug 'lepture/vim-jinja'
 Plug 'Exafunction/windsurf.vim'
 
