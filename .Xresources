@@ -1,18 +1,13 @@
 urxvt*termName: rxvt-256color
-! urxvt*background: #000000
-! urxvt*foreground: #cccccc
 urxvt*font: xft:Terminus:size=9:antialias=true
 !urxvt*letterSpace: -1
 
-!urxvt*scrollBar: false
-
-! urxvt*transparent: true
-! urxvt*shading: 20
-
-! Catppuccin Mocha
+! Using Catppuccin Mocha theme
 
 ! special
-urxvt*background: [80]#1E1E2E
+! NOTE: The transparency here will probably only work with a compositor. See
+! .i3/config to see which compositor is being used (probably picom)
+urxvt*background: [90]#1E1E2E
 urxvt*foreground: #CDD6F4
 urxvt*cursorColor: #F5E0DC
 

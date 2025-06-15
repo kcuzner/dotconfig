@@ -28,11 +28,21 @@ font pango:Hack 8
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
+# Desktop background
 exec --no-startup-id sh ~/.fehbg
 exec --no-startup-id variety
+
+# Dropbox
 exec --no-startup-id dropbox
+
+# Configure terminal
 exec --no-startup-id xrdb ~/.Xresources
+
+# Set a convenient compose key
 exec --no-startup-id setxkbmap -option compose:ralt
+
+# Use the picom X compositor to enable true transparency
+exec --no-startup-id picom
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
