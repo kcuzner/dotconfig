@@ -31,3 +31,5 @@ end)
 vim.keymap.set("n", "<leader>S", function ()
   MiniPick.builtin.cli({ command = {"rg", "--files", "--no-ignore", "--color=never"} });
 end)
+-- Need to ignore case for this to work right
+vim.opt.ignorecase = true
