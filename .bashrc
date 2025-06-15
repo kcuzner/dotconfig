@@ -42,26 +42,14 @@ then
 fi
 
 COLOR_RESET='\e[0m'
-
-# Use fancy colors if able
-case "$(tput colors)" in
-    "256" )
-        COLOR_ROOT='\e[1;31m'
-        COLOR_USER='\e[1;38;5;34m'
-        COLOR_SUDO='\e[1;33m'
-        COLOR_DIR='\e[1;38;5;33m'
-        COLOR_VCS='\e[38;5;202m'
-        COLOR_PROMPT='\e[38;5;250m'
-        ;;
-    *)
-        COLOR_ROOT='\e[1;31m'
-        COLOR_USER='\e[1;32m'
-        COLOR_SUDO='\e[1;33m'
-        COLOR_DIR='\e[1;34m'
-        COLOR_VCS='\e[33m'
-        COLOR_PROMPT=$COLOR_RESET
-        ;;
-esac
+# I used to use fancy colors here, but now the Xresources configuration handles
+# that to apply a theme.
+COLOR_ROOT='\e[1;31m'
+COLOR_USER='\e[1;32m'
+COLOR_SUDO='\e[1;33m'
+COLOR_DIR='\e[1;34m'
+COLOR_VCS='\e[33m'
+COLOR_PROMPT=$COLOR_RESET
 
 COLOR_CURRENT=${COLOR_USER}
 

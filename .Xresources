@@ -1,11 +1,63 @@
 urxvt*termName: rxvt-256color
-urxvt*background: #000000
-urxvt*foreground: #cccccc
+! urxvt*background: #000000
+! urxvt*foreground: #cccccc
 urxvt*font: xft:Terminus:size=9:antialias=true
 !urxvt*letterSpace: -1
 
+!urxvt*scrollBar: false
+
+! urxvt*transparent: true
+! urxvt*shading: 20
+
+! Catppuccin Mocha
+
+! special
+urxvt*background: [80]#1E1E2E
+urxvt*foreground: #CDD6F4
+urxvt*cursorColor: #F5E0DC
+
+! black
+urxvt*color0: #45475A
+urxvt*color8: #585B70
+
+! red
+urxvt*color1: #F38BA8
+urxvt*color9: #F38BA8
+
+! green
+urxvt*color2: #A6E3A1
+urxvt*color10: #A6E3A1
+
+! yellow
+urxvt*color3: #F9E2AF
+urxvt*color11: #F9E2AF
+
+! blue
+urxvt*color4: #89B4FA
+urxvt*color12: #89B4FA
+
+! magenta
+urxvt*color5: #F5C2E7
+urxvt*color13: #F5C2E7
+
+! cyan
+urxvt*color6: #94E2D5
+urxvt*color14: #94E2D5
+
+! white
+urxvt*color7: #BAC2DE
+urxvt*color15: #A6ADC8
+
+!! urxvt*Appearance
+urxvt*letterSpace: 0
+urxvt*lineSpace: 0
+urxvt*geometry: 92x24
+! urxvt*internalBorder: 24
+urxvt*cursorBlink: true
+urxvt*cursorUnderline: false
+urxvt*saveline: 2048
 urxvt*scrollBar: false
-
-urxvt*transparent: true
-urxvt*shading: 20
-
+urxvt*scrollBar_right: false
+urxvt*urgentOnBell: true
+urxvt*depth: 32
+urxvt*iso14755: false
