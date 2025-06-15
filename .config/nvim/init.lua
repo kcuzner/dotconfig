@@ -5,6 +5,9 @@ vim.cmd("source ~/.vimrc")
 -- Use system python, bypassing pyenv
 vim.g.python3_host_prog = "/usr/bin/python3"
 
+-- Neovide transparency
+vim.g.neovide_opacity = 0.9
+
 -- MiniFiles setup:
 --   Mapped to Alt+f
 require('mini.files').setup()

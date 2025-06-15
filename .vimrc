@@ -42,6 +42,7 @@ Plug 'Exafunction/windsurf.vim'
 
 if has("nvim")
   Plug 'echasnovski/mini.nvim'
+  Plug 'EdenEast/nightfox.nvim'
 else
   Plug 'scrooloose/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -142,7 +143,12 @@ nmap <leader>fp :cp<CR>
 nmap <leader>fq :ccl<CR>
 
 set background=dark
-colorscheme holokai
+if exists("g:neovide")
+  colorscheme terafox
+  set cursorline
+else
+  colorscheme holokai
+endif
 
 set guifont=Hack:h6
 
