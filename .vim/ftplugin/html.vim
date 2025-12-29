@@ -1,5 +1,6 @@
-set ts=2
-set sw=2
-set tw=99
-set formatoptions-=t
-
+if &filetype ==# "html"
+  setlocal ts=2
+  setlocal sw=2
+  setlocal tw=99
+  setlocal formatoptions-=t
+end
