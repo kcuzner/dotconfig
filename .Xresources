@@ -1,5 +1,5 @@
 urxvt*termName: rxvt-256color
-urxvt*font: xft:Terminus:size=9:antialias=true
+urxvt*font: xft:xos4 Terminus:size=9:antialias=true
 !urxvt*letterSpace: -1
 
 ! Using Catppuccin Mocha theme
