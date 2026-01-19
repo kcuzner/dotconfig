@@ -38,7 +38,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'psf/black'
 Plug 'lepture/vim-jinja'
-Plug 'Exafunction/windsurf.vim'
+"Plug 'Exafunction/windsurf.vim'
 
 if has("nvim")
   Plug 'echasnovski/mini.nvim'
