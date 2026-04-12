@@ -43,6 +43,7 @@ Plug 'lepture/vim-jinja'
 if has("nvim")
   Plug 'echasnovski/mini.nvim'
   Plug 'EdenEast/nightfox.nvim'
+  Plug 'rebelot/kanagawa.nvim'
 else
   Plug 'scrooloose/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -144,7 +145,7 @@ nmap <leader>fq :ccl<CR>
 
 set background=dark
 if exists("g:neovide")
-  colorscheme terafox
+  colorscheme kanagawa
   set cursorline
 else
   colorscheme holokai
