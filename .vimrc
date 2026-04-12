@@ -131,8 +131,8 @@ set expandtab
 set scrolloff=10
 
 " fzf configuration
-nnoremap <Leader>s :call fzf#run({'source': 'rg --files', 'sink': 'e', 'down': '40%'})<CR>
-nnoremap <Leader>S :call fzf#run({'source': 'rg --files --no-ignore', 'sink': 'e', 'down': '40%'})<CR>
+nnoremap <Leader>s :call fzf#run({'source': 'rg --files --hidden', 'sink': 'e', 'down': '40%'})<CR>
+nnoremap <Leader>S :call fzf#run({'source': 'rg --files --hidden --no-ignore', 'sink': 'e', 'down': '40%'})<CR>
 
 " ripgrep
 set grepprg=rg\ --vimgrep

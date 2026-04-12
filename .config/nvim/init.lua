@@ -29,10 +29,10 @@ require('mini.icons').setup()
 -- I've found this to be considerably faster than fzf
 require('mini.pick').setup()
 vim.keymap.set("n", "<leader>s", function ()
-  MiniPick.builtin.files()
+  MiniPick.builtin.cli({ command = {"rg", "--files", "--hidden", "--color=never"} });
 end)
 vim.keymap.set("n", "<leader>S", function ()
-  MiniPick.builtin.cli({ command = {"rg", "--files", "--no-ignore", "--color=never"} });
+  MiniPick.builtin.cli({ command = {"rg", "--files", "--hidden", "--no-ignore", "--color=never"} });
 end)
 vim.keymap.set("n", "<leader>o", function () -- o for open files
   MiniPick.builtin.buffers()
